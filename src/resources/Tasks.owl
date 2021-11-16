@@ -1,0 +1,357 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="http://www.semanticweb.org/deboracristinaengelmann/ontologies/2021/10/untitled-ontology-7"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="http://www.semanticweb.org/deboracristinaengelmann/ontologies/2021/10/untitled-ontology-7">
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Declaration>
+        <Class IRI="#Age_Group"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Gender"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Man"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Person"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Place"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Task"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Woman"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#is-in"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#is-of-age-group"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#is-of-gender"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#is-performed-by"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#occurs-in"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty IRI="#perform"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty IRI="#age"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Adult"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Child"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Female"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Fulana"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Fulaninho"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Fulano"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Male"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Play"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Playground"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#Studying"/>
+    </Declaration>
+    <Declaration>
+        <NamedIndividual IRI="#University"/>
+    </Declaration>
+    <SubClassOf>
+        <Class IRI="#Man"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
+        <Class IRI="#Woman"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <ClassAssertion>
+        <Class IRI="#Age_Group"/>
+        <NamedIndividual IRI="#Adult"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Age_Group"/>
+        <NamedIndividual IRI="#Child"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Gender"/>
+        <NamedIndividual IRI="#Female"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Woman"/>
+        <NamedIndividual IRI="#Fulana"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Person"/>
+        <NamedIndividual IRI="#Fulaninho"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Man"/>
+        <NamedIndividual IRI="#Fulano"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Gender"/>
+        <NamedIndividual IRI="#Male"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Task"/>
+        <NamedIndividual IRI="#Play"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Place"/>
+        <NamedIndividual IRI="#Playground"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Task"/>
+        <NamedIndividual IRI="#Studying"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Place"/>
+        <NamedIndividual IRI="#University"/>
+    </ClassAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#occurs-in"/>
+        <NamedIndividual IRI="#Play"/>
+        <NamedIndividual IRI="#Playground"/>
+    </ObjectPropertyAssertion>
+    <ObjectPropertyAssertion>
+        <ObjectProperty IRI="#occurs-in"/>
+        <NamedIndividual IRI="#Studying"/>
+        <NamedIndividual IRI="#University"/>
+    </ObjectPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#age"/>
+        <NamedIndividual IRI="#Fulaninho"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">12</Literal>
+    </DataPropertyAssertion>
+    <DataPropertyAssertion>
+        <DataProperty IRI="#age"/>
+        <NamedIndividual IRI="#Fulano"/>
+        <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">24</Literal>
+    </DataPropertyAssertion>
+    <InverseObjectProperties>
+        <ObjectProperty IRI="#is-performed-by"/>
+        <ObjectProperty IRI="#perform"/>
+    </InverseObjectProperties>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#is-in"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#is-of-age-group"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#is-of-gender"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#is-performed-by"/>
+        <Class IRI="#Task"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty IRI="#occurs-in"/>
+        <Class IRI="#Task"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#is-in"/>
+        <Class IRI="#Place"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#is-of-age-group"/>
+        <Class IRI="#Age_Group"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#is-of-gender"/>
+        <Class IRI="#Gender"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#is-performed-by"/>
+        <Class IRI="#Person"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty IRI="#occurs-in"/>
+        <Class IRI="#Place"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty IRI="#age"/>
+        <Class IRI="#Person"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty IRI="#age"/>
+        <Datatype abbreviatedIRI="xsd:int"/>
+    </DataPropertyRange>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Man"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-of-gender"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Male"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Person"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-of-age-group"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Adult"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#perform"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Studying"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Person"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-of-age-group"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Child"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#perform"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Play"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Person"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#age"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <Variable IRI="urn:swrl:var#A"/>
+            </DataPropertyAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#greaterThan">
+                <Variable IRI="urn:swrl:var#A"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">17</Literal>
+            </BuiltInAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-of-age-group"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Adult"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Person"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
+            <DataPropertyAtom>
+                <DataProperty IRI="#age"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <Variable IRI="urn:swrl:var#A"/>
+            </DataPropertyAtom>
+            <BuiltInAtom IRI="http://www.w3.org/2003/11/swrlb#lessThan">
+                <Variable IRI="urn:swrl:var#A"/>
+                <Literal datatypeIRI="http://www.w3.org/2001/XMLSchema#integer">18</Literal>
+            </BuiltInAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-of-age-group"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Child"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Woman"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-of-gender"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <NamedIndividual IRI="#Female"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#perform"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <Variable IRI="urn:swrl:var#T"/>
+            </ObjectPropertyAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#occurs-in"/>
+                <Variable IRI="urn:swrl:var#T"/>
+                <Variable IRI="urn:swrl:var#L"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-in"/>
+                <Variable IRI="urn:swrl:var#P"/>
+                <Variable IRI="urn:swrl:var#L"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

@@ -1,0 +1,17 @@
+/*
+    Created by: Débora Engelmann
+	August 13, 2020
+*/
+
+mas ontological_reasoning {
+
+   
+    agent ontology_assistant:ontology_assistant.asl{
+    	focus: onto
+    }
+    
+	workspace wp{
+		artifact onto:br.pucrs.smart.ontology.mas.OntologyArtifact("src/resources/Tasks.owl")
+	}
+
+}

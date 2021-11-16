@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.5.0">
+	<wb-module deploy-name="ontological_reasoning">
+		<property name="context-root" value="ontological_reasoning"/>
+		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/env"/>
+		<wb-resource deploy-path="/WEB-INF/classes" source-path="src/agt"/>
+	</wb-module>
+</project-modules>
