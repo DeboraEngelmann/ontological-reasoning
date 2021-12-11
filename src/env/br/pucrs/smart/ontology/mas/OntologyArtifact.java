@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -34,6 +35,7 @@ import jason.asSyntax.Term;
 import openllet.owlapi.OWL;
 import openllet.owlapi.OpenlletReasoner;
 import openllet.owlapi.OpenlletReasonerFactory;
+import openllet.owlapi.explanation.GlassBoxExplanation;
 import openllet.owlapi.explanation.PelletExplanation;
 
 public class OntologyArtifact extends Artifact {
@@ -79,9 +81,6 @@ public class OntologyArtifact extends Artifact {
 	void getExplanation(String strDomain, String strRange, String strobjectProperty, OpFeedbackParam<Literal[]> axioms) {
 		List<Object> axiomList = new ArrayList<Object>();
 
-//		System.out.println("strDomain "+ strDomain);
-//		System.out.println("strRange "+ strRange);
-//		System.out.println("strobjectProperty "+ strobjectProperty);
 			OWLDataFactory dataFactory = this.ontology.getOWLOntologyManager().getOWLDataFactory();
 			IRI baseIRI = this.ontology.getOntologyID().getDefaultDocumentIRI().get();
 			
@@ -89,13 +88,13 @@ public class OntologyArtifact extends Artifact {
 	        OWLNamedIndividual range = dataFactory.getOWLNamedIndividual(IRI.create((String)((Object)baseIRI + "#" + strRange)));
 	        OWLObjectProperty objectProperty = dataFactory.getOWLObjectProperty(IRI.create((String)((Object)baseIRI + "#" + strobjectProperty)));
 	        OWLObjectPropertyAssertionAxiom propertyAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom((OWLObjectPropertyExpression)objectProperty, (OWLIndividual)domain, (OWLIndividual)range);
-		
-			Set<OWLAxiom> axiomSet = this.expGen.getEntailmentExplanation((OWLAxiom)propertyAssertion);
-//			axioms.set(axiomSet.toString());
-//			System.out.println(axiomList);
+
+			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion);
+			
+			Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
 			
 			Collection<Term> owlRulesList = new ArrayList<Term>();
-			owlRulesList.add(ASSyntax.createString(axiomSet.toString()));
+			owlRulesList.add(ASSyntax.createString(explanation.toString()));
 			Literal owlRules = ASSyntax.createLiteral("owlRules", ASSyntax.createList(owlRulesList));
 			axiomList.add(owlRules);
 		
@@ -254,6 +253,33 @@ public class OntologyArtifact extends Artifact {
 		dataPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
 		
+
+	Set<OWLAxiom> chooseExplanation(Set<Set<OWLAxiom>> axiomSets) {
+		Set<OWLAxiom> mainExplanation = null;
+		int mainScore = 1000;
+		for (Set<OWLAxiom> axiomSet : axiomSets) {
+
+			AxiomTranslator.translateAxioms(axiomSet);
+			int score = 0;
+			int numRules = 0;
+			int numAxioms = 0;
+			
+			for (OWLAxiom axiom : axiomSet) {
+				numAxioms++;
+				if (AxiomTranslator.hasType(axiom, "Rule")) numRules++;
+			}
+			score = numRules + numAxioms;
+			if (score<mainScore) {
+				mainScore = score;
+				mainExplanation = axiomSet;
+			}
+		}
+		
+		System.out.println("Chosen Explanation: [");
+		mainExplanation.forEach(axiom -> System.out.println(axiom));
+		System.out.println("]");
+		return mainExplanation;
+	}
 }
 
 
