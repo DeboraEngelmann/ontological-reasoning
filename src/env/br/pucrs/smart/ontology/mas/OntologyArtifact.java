@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -35,7 +34,6 @@ import jason.asSyntax.Term;
 import openllet.owlapi.OWL;
 import openllet.owlapi.OpenlletReasoner;
 import openllet.owlapi.OpenlletReasonerFactory;
-import openllet.owlapi.explanation.GlassBoxExplanation;
 import openllet.owlapi.explanation.PelletExplanation;
 
 public class OntologyArtifact extends Artifact {
@@ -92,7 +90,7 @@ public class OntologyArtifact extends Artifact {
 			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion);
 			
 			Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
-			
+			AxiomTranslator.translateAxioms(explanation);
 			Collection<Term> owlRulesList = new ArrayList<Term>();
 			owlRulesList.add(ASSyntax.createString(explanation.toString()));
 			Literal owlRules = ASSyntax.createLiteral("owlRules", ASSyntax.createList(owlRulesList));
@@ -258,8 +256,6 @@ public class OntologyArtifact extends Artifact {
 		Set<OWLAxiom> mainExplanation = null;
 		int mainScore = 1000;
 		for (Set<OWLAxiom> axiomSet : axiomSets) {
-
-			AxiomTranslator.translateAxioms(axiomSet);
 			int score = 0;
 			int numRules = 0;
 			int numAxioms = 0;
