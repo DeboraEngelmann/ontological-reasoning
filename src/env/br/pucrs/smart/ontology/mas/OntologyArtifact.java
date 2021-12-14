@@ -90,7 +90,7 @@ public class OntologyArtifact extends Artifact {
 			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion);
 			
 			Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
-			AxiomTranslator.translateAxioms(explanation);
+//			AxiomTranslator.translateAxioms(explanation);
 			Collection<Term> owlRulesList = new ArrayList<Term>();
 			owlRulesList.add(ASSyntax.createString(explanation.toString()));
 			Literal owlRules = ASSyntax.createLiteral("owlRules", ASSyntax.createList(owlRulesList));
@@ -269,6 +269,7 @@ public class OntologyArtifact extends Artifact {
 				mainScore = score;
 				mainExplanation = axiomSet;
 			}
+			AxiomTranslator.translateAxioms(axiomSet);
 		}
 		
 		System.out.println("Chosen Explanation: [");
