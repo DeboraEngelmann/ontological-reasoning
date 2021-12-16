@@ -16,10 +16,37 @@
 	
 	!fillTheBeliefBase;	
 	
-	getExplanation("Fulano", "Adult", "is-of-age-group", Axioms);
-	.print("Axiom", Axioms);
+//	getExplanation("Fulano", "Adult", "is-of-age-group", Axioms);
+	getExplanation("Fulano", "University", "is-in", Axioms);
+	.print(Axioms);
+	+Axioms;
+	!addToBB(Axioms);
 	.
 
+
++!instantiateArgumentScheme(Axioms)
+<-
+	
+	.print(Axioms);
+	 .
+
++!addToBB(owlAxioms(List))
+<-
+	!addToBB(List)	
+	.
++!addToBB([H])
+<-
+	+H;
+	.print(H);
+	.
++!addToBB([H|T])
+<-
+	+H;
+	.print(H);
+	!addToBB(T);
+	.
+	
+	
 +!print(_,[])
 <-
 	.print("End of list");	

@@ -10,6 +10,7 @@ import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLDataPropertyAssertionAxiom;
+import org.semanticweb.owlapi.model.OWLObjectPropertyAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLSubClassOfAxiom;
 import org.semanticweb.owlapi.model.SWRLAtom;
 import org.semanticweb.owlapi.model.SWRLRule;
@@ -20,8 +21,8 @@ import jason.asSyntax.Term;
 
 public class AxiomTranslator {
 	
-	static void translateAxioms(Set<OWLAxiom> explanation) {
-		
+	static Collection<Term> translateAxioms(Set<OWLAxiom> explanation) {
+		Collection<Term> explanationTerms = new LinkedList<Term>();
 		
 		for (OWLAxiom axiom : explanation) {
 			
@@ -30,18 +31,38 @@ public class AxiomTranslator {
 				SWRLRule rule = (SWRLRule) axiom;
 				List<SWRLAtom> body = rule.bodyList();
 				List<SWRLAtom> head = rule.headList();
-//				System.out.println("Rule");
-//				axiom.components().forEach(c-> System.out.println(c));
+				System.out.println("----------------------------------");
+				System.out.println("body");
+				System.out.println(body);
+				System.out.println("head");
+				System.out.println(body);
+				System.out.println("----------------------------------");
 				
 				Collection<Term> bodyTerms = getTermsBySWRLAtoms(body);
 				Collection<Term> headTerms = getTermsBySWRLAtoms(head);
 				
 				Literal dF = ASSyntax.createLiteral("defeasible_rule", ASSyntax.createList(headTerms));
 				dF.addTerm(ASSyntax.createList(bodyTerms));
-				dF.addAnnot(ASSyntax.createLiteral("as", ASSyntax.createString("Esquema1")));
+				dF.addAnnot(ASSyntax.createLiteral("as", ASSyntax.createString("esquema1")));
 //				System.out.println(dF);
+				
+				explanationTerms.add(dF);
 			} else if(hasType(axiom, "ObjectPropertyDomain")){
 				//ignore
+			} else if(hasType(axiom, "ObjectPropertyAssertion")){
+
+				OWLObjectPropertyAssertionAxiom oPAAxiom = (OWLObjectPropertyAssertionAxiom) axiom;
+				List<?> oPAAxiomComponents = oPAAxiom.components().collect(Collectors.toList());
+				
+				String domain = oPAAxiomComponents.get(0).toString();
+				String objectPropertie = oPAAxiomComponents.get(1).toString();
+				String range = oPAAxiomComponents.get(2).toString();
+				
+				Literal l = ASSyntax.createLiteral(OntoQueryLayerLiteral.getNameForJason(objectPropertie.substring((objectPropertie.indexOf("#")+1), objectPropertie.indexOf(">"))));
+				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">")))));
+				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
+				
+				explanationTerms.add(l);
 			} else if(hasType(axiom, "DataPropertyDomain")){
 //				//ignore
 			} else if(hasType(axiom, "DataPropertyAssertion")){
@@ -60,7 +81,8 @@ public class AxiomTranslator {
 				} else {
 					l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
 				}
-
+				
+				explanationTerms.add(l);
 			} else if(hasType(axiom, "SubClassOf")){
 
 				OWLSubClassOfAxiom sCAAxiom = (OWLSubClassOfAxiom) axiom;
@@ -72,6 +94,7 @@ public class AxiomTranslator {
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">")))));
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
 				
+				explanationTerms.add(l);
 			} else if(hasType(axiom, "ClassAssertion")){
 
 				OWLClassAssertionAxiom cAAxiom = (OWLClassAssertionAxiom) axiom;
@@ -81,12 +104,15 @@ public class AxiomTranslator {
 				String domain = cAAxiomComponents.get(1).toString();
 				Literal l = ASSyntax.createLiteral(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">"))));
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
-
+				
+				explanationTerms.add(l);
 			} else {
 				System.out.println("[AxiomTranslator] Error: Type not registered: " + axiom.getAxiomType());
 				System.out.println(axiom);
 			}
 		}
+		
+		return explanationTerms;
 		
 	}
 	

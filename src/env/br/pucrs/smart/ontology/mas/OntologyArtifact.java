@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 
+import org.apache.xalan.xsltc.compiler.sym;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -76,8 +77,7 @@ public class OntologyArtifact extends Artifact {
 	 * @return a string with a set of axioms that explain the reasoner's inference.
 	 */
 	@OPERATION
-	void getExplanation(String strDomain, String strRange, String strobjectProperty, OpFeedbackParam<Literal[]> axioms) {
-		List<Object> axiomList = new ArrayList<Object>();
+	void getExplanation(String strDomain, String strRange, String strobjectProperty, OpFeedbackParam<Literal> axioms) {
 
 			OWLDataFactory dataFactory = this.ontology.getOWLOntologyManager().getOWLDataFactory();
 			IRI baseIRI = this.ontology.getOntologyID().getDefaultDocumentIRI().get();
@@ -91,12 +91,13 @@ public class OntologyArtifact extends Artifact {
 			
 			Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
 //			AxiomTranslator.translateAxioms(explanation);
-			Collection<Term> owlRulesList = new ArrayList<Term>();
-			owlRulesList.add(ASSyntax.createString(explanation.toString()));
-			Literal owlRules = ASSyntax.createLiteral("owlRules", ASSyntax.createList(owlRulesList));
-			axiomList.add(owlRules);
+			Collection<Term> owlRulesList = AxiomTranslator.translateAxioms(explanation);
+			owlRulesList.forEach(x->System.out.println(x));
+			System.out.println(ASSyntax.createList(owlRulesList));
+			Literal owlAxioms = ASSyntax.createLiteral("owlAxioms", ASSyntax.createList(owlRulesList));
+//			axiomList.add(owlAxioms);
 		
-		axioms.set(axiomList.toArray(new Literal[axiomList.size()]));
+		axioms.set(owlAxioms);
 					
 	}
 	
@@ -269,7 +270,7 @@ public class OntologyArtifact extends Artifact {
 				mainScore = score;
 				mainExplanation = axiomSet;
 			}
-			AxiomTranslator.translateAxioms(axiomSet);
+//			AxiomTranslator.translateAxioms(axiomSet);
 		}
 		
 		System.out.println("Chosen Explanation: [");
