@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.semanticweb.owlapi.model.AxiomType;
@@ -38,7 +39,8 @@ public class AxiomTranslator {
 				
 				Literal dF = ASSyntax.createLiteral("defeasible_rule", ASSyntax.createList(headTerms));
 				dF.addTerm(ASSyntax.createList(bodyTerms));
-				dF.addAnnot(ASSyntax.createLiteral("as", ASSyntax.createString("esquema1")));
+				UUID uniqueKey = UUID.randomUUID();
+				dF.addAnnot(ASSyntax.createLiteral("as", ASSyntax.createString("scheme_"+OntoQueryLayerLiteral.getNameForJason(uniqueKey.toString()))));
 				
 				rules.add(dF);
 			} else if(hasType(axiom, "ObjectPropertyDomain")){
