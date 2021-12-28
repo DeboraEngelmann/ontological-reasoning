@@ -91,13 +91,15 @@ public class OntologyArtifact extends Artifact {
 			
 			Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
 //			AxiomTranslator.translateAxioms(explanation);
-			Collection<Term> owlRulesList = AxiomTranslator.translateAxioms(explanation);
-			owlRulesList.forEach(x->System.out.println(x));
-			System.out.println(ASSyntax.createList(owlRulesList));
-			Literal owlAxioms = ASSyntax.createLiteral("owlAxioms", ASSyntax.createList(owlRulesList));
+//			ExplanationTerms explanationTerms = AxiomTranslator.translateAxioms(explanation);
+//			Collection<Term> owlRulesList = AxiomTranslator.translateAxioms(explanation);
+//			owlRulesList.forEach(x->System.out.println(x));
+			
+//			System.out.println(ASSyntax.createList(owlRulesList));
+//			Literal owlAxioms = ASSyntax.createLiteral("owlAxioms", ASSyntax.createList(owlRulesList));
 //			axiomList.add(owlAxioms);
 		
-		axioms.set(owlAxioms);
+		axioms.set(AxiomTranslator.translateAxioms(explanation));
 					
 	}
 	

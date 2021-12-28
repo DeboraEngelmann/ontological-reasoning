@@ -21,9 +21,10 @@ import jason.asSyntax.Term;
 
 public class AxiomTranslator {
 	
-	static Collection<Term> translateAxioms(Set<OWLAxiom> explanation) {
-		Collection<Term> explanationTerms = new LinkedList<Term>();
-		
+	static Literal translateAxioms(Set<OWLAxiom> explanation) {
+		Collection<Term> rules =  new LinkedList<Term>();
+		Collection<Term> assertions =  new LinkedList<Term>();
+		Collection<Term> classInfo =  new LinkedList<Term>();
 		for (OWLAxiom axiom : explanation) {
 			
 			if(hasType(axiom, "Rule")){
@@ -46,7 +47,7 @@ public class AxiomTranslator {
 				dF.addAnnot(ASSyntax.createLiteral("as", ASSyntax.createString("esquema1")));
 //				System.out.println(dF);
 				
-				explanationTerms.add(dF);
+				rules.add(dF);
 			} else if(hasType(axiom, "ObjectPropertyDomain")){
 				//ignore
 			} else if(hasType(axiom, "ObjectPropertyAssertion")){
@@ -62,7 +63,7 @@ public class AxiomTranslator {
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">")))));
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
 				
-				explanationTerms.add(l);
+				assertions.add(l);
 			} else if(hasType(axiom, "DataPropertyDomain")){
 //				//ignore
 			} else if(hasType(axiom, "DataPropertyAssertion")){
@@ -82,7 +83,7 @@ public class AxiomTranslator {
 					l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
 				}
 				
-				explanationTerms.add(l);
+				assertions.add(l);
 			} else if(hasType(axiom, "SubClassOf")){
 
 				OWLSubClassOfAxiom sCAAxiom = (OWLSubClassOfAxiom) axiom;
@@ -94,7 +95,7 @@ public class AxiomTranslator {
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">")))));
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
 				
-				explanationTerms.add(l);
+				classInfo.add(l);
 			} else if(hasType(axiom, "ClassAssertion")){
 
 				OWLClassAssertionAxiom cAAxiom = (OWLClassAssertionAxiom) axiom;
@@ -105,13 +106,23 @@ public class AxiomTranslator {
 				Literal l = ASSyntax.createLiteral(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">"))));
 				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
 				
-				explanationTerms.add(l);
+				classInfo.add(l);
 			} else {
 				System.out.println("[AxiomTranslator] Error: Type not registered: " + axiom.getAxiomType());
 				System.out.println(axiom);
 			}
 		}
 		
+		
+		
+		Literal assertionsLiteral = ASSyntax.createLiteral("assertions", ASSyntax.createList(assertions));
+		Literal classInfoLiteral = ASSyntax.createLiteral("classInfo", ASSyntax.createList(classInfo));
+		Literal rulesLiteral = ASSyntax.createLiteral("rules", ASSyntax.createList(rules));
+		
+		Literal explanationTerms = ASSyntax.createLiteral("explanationTerms", rulesLiteral);
+		explanationTerms.addTerm(assertionsLiteral);
+		explanationTerms.addTerm(classInfoLiteral);
+
 		return explanationTerms;
 		
 	}

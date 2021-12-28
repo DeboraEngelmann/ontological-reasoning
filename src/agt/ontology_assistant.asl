@@ -21,23 +21,33 @@
 	.print(Axioms);
 	+Axioms;
 	!addToBB(Axioms);
+	!instantiateArgumentScheme(Axioms);
 	.
 
++!teste : true 
+	<- 
+	    jia.get_unifier2(defeasible_rule([is_of_age_group(P,adult)],[person(P),age(P,A),greaterThan(A,17)])[as(regra1)],age(fulano,24),Unifier);
+		.print("Função de unificação: ", Unifier).
 
-+!instantiateArgumentScheme(Axioms)
++!instantiateArgumentScheme(explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
 <-
+	!instantiateArgumentScheme(RulesList,AssertionsList).
 	
-	.print(Axioms);
-	 .
-
-+!addToBB(owlAxioms(List))
++!instantiateArgumentScheme(RulesList,AssertionsList)
 <-
-	!addToBB(List)	
+	jia.get_unifier2(RulesList,AssertionsList,Unifier);
+	.print("Função de unificação: ", Unifier);
 	.
-+!addToBB([H])
+
++!addToBB(explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
 <-
-	+H;
-	.print(H);
+	!addToBB(RulesList);
+	!addToBB(AssertionsList);
+	!addToBB(ClassInfoList);	
+	.
++!addToBB([])
+<-
+	.print("End of list")
 	.
 +!addToBB([H|T])
 <-
