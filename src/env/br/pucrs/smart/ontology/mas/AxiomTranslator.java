@@ -32,12 +32,6 @@ public class AxiomTranslator {
 				SWRLRule rule = (SWRLRule) axiom;
 				List<SWRLAtom> body = rule.bodyList();
 				List<SWRLAtom> head = rule.headList();
-				System.out.println("----------------------------------");
-				System.out.println("body");
-				System.out.println(body);
-				System.out.println("head");
-				System.out.println(body);
-				System.out.println("----------------------------------");
 				
 				Collection<Term> bodyTerms = getTermsBySWRLAtoms(body);
 				Collection<Term> headTerms = getTermsBySWRLAtoms(head);
@@ -45,7 +39,6 @@ public class AxiomTranslator {
 				Literal dF = ASSyntax.createLiteral("defeasible_rule", ASSyntax.createList(headTerms));
 				dF.addTerm(ASSyntax.createList(bodyTerms));
 				dF.addAnnot(ASSyntax.createLiteral("as", ASSyntax.createString("esquema1")));
-//				System.out.println(dF);
 				
 				rules.add(dF);
 			} else if(hasType(axiom, "ObjectPropertyDomain")){

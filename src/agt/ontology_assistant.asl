@@ -1,7 +1,5 @@
 // Agent ontology_assistant in project ontological_reasoning
 
-/* Initial beliefs and rules */
-
 /* Initial goals */
 
 !start.
@@ -18,16 +16,11 @@
 	
 //	getExplanation("Fulano", "Adult", "is-of-age-group", Axioms);
 	getExplanation("Fulano", "University", "is-in", Axioms);
-	.print(Axioms);
+//	.print(Axioms);
 	+Axioms;
 	!addToBB(Axioms);
 	!instantiateArgumentScheme(Axioms);
 	.
-
-+!teste : true 
-	<- 
-	    jia.get_unifier2(defeasible_rule([is_of_age_group(P,adult)],[person(P),age(P,A),greaterThan(A,17)])[as(regra1)],age(fulano,24),Unifier);
-		.print("Função de unificação: ", Unifier).
 
 +!instantiateArgumentScheme(explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
 <-
@@ -35,8 +28,8 @@
 	
 +!instantiateArgumentScheme(RulesList,AssertionsList)
 <-
-	jia.get_unifier2(RulesList,AssertionsList,Unifier);
-	.print("Função de unificação: ", Unifier);
+	jia.unifyRule(RulesList,AssertionsList,Unifier);
+	!print("Rule", Unifier);
 	.
 
 +!addToBB(explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
