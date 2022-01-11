@@ -6,6 +6,7 @@
      xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
      xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
      ontologyIRI="http://www.semanticweb.org/deboracristinaengelmann/ontologies/2021/10/untitled-ontology-7">
+    <Prefix name="" IRI="http://www.semanticweb.org/deboracristinaengelmann/ontologies/2021/10/untitled-ontology-7"/>
     <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
     <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
     <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
@@ -25,6 +26,9 @@
     </Declaration>
     <Declaration>
         <Class IRI="#Place"/>
+    </Declaration>
+    <Declaration>
+        <Class IRI="#Student"/>
     </Declaration>
     <Declaration>
         <Class IRI="#Task"/>
@@ -91,6 +95,10 @@
         <Class IRI="#Person"/>
     </SubClassOf>
     <SubClassOf>
+        <Class IRI="#Student"/>
+        <Class IRI="#Person"/>
+    </SubClassOf>
+    <SubClassOf>
         <Class IRI="#Woman"/>
         <Class IRI="#Person"/>
     </SubClassOf>
@@ -105,6 +113,10 @@
     <ClassAssertion>
         <Class IRI="#Gender"/>
         <NamedIndividual IRI="#Female"/>
+    </ClassAssertion>
+    <ClassAssertion>
+        <Class IRI="#Student"/>
+        <NamedIndividual IRI="#Fulana"/>
     </ClassAssertion>
     <ClassAssertion>
         <Class IRI="#Woman"/>
@@ -138,6 +150,14 @@
         <Class IRI="#Place"/>
         <NamedIndividual IRI="#University"/>
     </ClassAssertion>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="#Adult"/>
+        <NamedIndividual IRI="#Child"/>
+    </DifferentIndividuals>
+    <DifferentIndividuals>
+        <NamedIndividual IRI="#Female"/>
+        <NamedIndividual IRI="#Male"/>
+    </DifferentIndividuals>
     <ObjectPropertyAssertion>
         <ObjectProperty IRI="#occurs-in"/>
         <NamedIndividual IRI="#Play"/>
@@ -212,6 +232,10 @@
     </DataPropertyRange>
     <DLSafeRule>
         <Body>
+            <ClassAtom>
+                <Class IRI="#Student"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
             <ClassAtom>
                 <Class IRI="#Man"/>
                 <Variable IRI="urn:swrl:var#P"/>
@@ -315,6 +339,10 @@
     </DLSafeRule>
     <DLSafeRule>
         <Body>
+            <ClassAtom>
+                <Class IRI="#Student"/>
+                <Variable IRI="urn:swrl:var#P"/>
+            </ClassAtom>
             <ClassAtom>
                 <Class IRI="#Woman"/>
                 <Variable IRI="urn:swrl:var#P"/>

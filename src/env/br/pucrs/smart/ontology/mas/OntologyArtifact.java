@@ -2,12 +2,12 @@ package br.pucrs.smart.ontology.mas;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import org.apache.xalan.xsltc.compiler.sym;
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
 import org.semanticweb.owlapi.model.OWLAxiom;
@@ -31,7 +31,6 @@ import cartago.OPERATION;
 import cartago.OpFeedbackParam;
 import jason.asSyntax.ASSyntax;
 import jason.asSyntax.Literal;
-import jason.asSyntax.Term;
 import openllet.owlapi.OWL;
 import openllet.owlapi.OpenlletReasoner;
 import openllet.owlapi.OpenlletReasonerFactory;
@@ -77,22 +76,38 @@ public class OntologyArtifact extends Artifact {
 	 * @return a string with a set of axioms that explain the reasoner's inference.
 	 */
 	@OPERATION
-	void getExplanation(String strDomain, String strRange, String strobjectProperty, OpFeedbackParam<Literal> axioms) {
+	void getExplanation(String strObjectProperty, String parameter, OpFeedbackParam<Literal> axioms) {
+		
+		Map<String, String> params = extractData(Literal.parseLiteral(parameter));
 
 			OWLDataFactory dataFactory = this.ontology.getOWLOntologyManager().getOWLDataFactory();
 			IRI baseIRI = this.ontology.getOntologyID().getDefaultDocumentIRI().get();
 			
-			OWLNamedIndividual domain = dataFactory.getOWLNamedIndividual(IRI.create((String)((Object)baseIRI + "#" + strDomain)));
-	        OWLNamedIndividual range = dataFactory.getOWLNamedIndividual(IRI.create((String)((Object)baseIRI + "#" + strRange)));
-	        OWLObjectProperty objectProperty = dataFactory.getOWLObjectProperty(IRI.create((String)((Object)baseIRI + "#" + strobjectProperty)));
+			OWLNamedIndividual domain = dataFactory.getOWLNamedIndividual(IRI.create((String)((Object)baseIRI + "#" + params.get("strDomain"))));
+	        OWLNamedIndividual range = dataFactory.getOWLNamedIndividual(IRI.create((String)((Object)baseIRI + "#" + params.get("strRange"))));
+	        OWLObjectProperty objectProperty = dataFactory.getOWLObjectProperty(IRI.create((String)((Object)baseIRI + "#" + strObjectProperty)));
+	        
 	        OWLObjectPropertyAssertionAxiom propertyAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom((OWLObjectPropertyExpression)objectProperty, (OWLIndividual)domain, (OWLIndividual)range);
 
-			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion);
-			
-			Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
+			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion, 20);
+//	        Set<OWLAxiom> explanation = this.expGen.getEntailmentExplanation((OWLAxiom)propertyAssertion);
+			if (axiomSets.isEmpty()) {
+//			if (explanation.isEmpty()) {
+				axioms.set(ASSyntax.createLiteral("explanationTerms", ASSyntax.createString("empty")));
+			} else {
+				Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
+				System.out.println("translate");
+				axioms.set(AxiomTranslator.translateAxioms(explanation));
+			}	
+	}
+	
+	Map<String, String> extractData(Literal parameter) {
+		Map<String, String> params = new HashMap<String, String>();
 		
-		axioms.set(AxiomTranslator.translateAxioms(explanation));
-					
+		params.put("strDomain", parameter.getTerm(0).toString().replace("\"", ""));
+		params.put("strRange", parameter.getTerm(1).toString().replace("\"", ""));
+
+		return params;
 	}
 	
 	/**
@@ -249,7 +264,7 @@ public class OntologyArtifact extends Artifact {
 
 	Set<OWLAxiom> chooseExplanation(Set<Set<OWLAxiom>> axiomSets) {
 		Set<OWLAxiom> mainExplanation = null;
-		int mainScore = 1000;
+		int mainScore = 0;
 		for (Set<OWLAxiom> axiomSet : axiomSets) {
 			int score = 0;
 			int numRules = 0;
@@ -260,16 +275,16 @@ public class OntologyArtifact extends Artifact {
 				if (AxiomTranslator.hasType(axiom, "Rule")) numRules++;
 			}
 			score = numRules + numAxioms;
-			if (score<mainScore) {
+			if (score>mainScore) {
 				mainScore = score;
 				mainExplanation = axiomSet;
 			}
 //			AxiomTranslator.translateAxioms(axiomSet);
 		}
 		
-		System.out.println("Chosen Explanation: [");
-		mainExplanation.forEach(axiom -> System.out.println(axiom));
-		System.out.println("]");
+//		System.out.println("Chosen Explanation: [");
+//		mainExplanation.forEach(axiom -> System.out.println(axiom));
+//		System.out.println("]");
 		return mainExplanation;
 	}
 }

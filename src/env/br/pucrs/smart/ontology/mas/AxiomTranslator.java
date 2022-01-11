@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.semanticweb.owlapi.io.SystemOutDocumentTarget;
 import org.semanticweb.owlapi.model.AxiomType;
 import org.semanticweb.owlapi.model.OWLAxiom;
 import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
@@ -45,6 +46,8 @@ public class AxiomTranslator {
 				rules.add(dF);
 			} else if(hasType(axiom, "ObjectPropertyDomain")){
 				//ignore
+			} else if(hasType(axiom, "ObjectPropertyRange")){
+				//ignore
 			} else if(hasType(axiom, "ObjectPropertyAssertion")){
 
 				OWLObjectPropertyAssertionAxiom oPAAxiom = (OWLObjectPropertyAssertionAxiom) axiom;
@@ -55,11 +58,15 @@ public class AxiomTranslator {
 				String range = oPAAxiomComponents.get(2).toString();
 				
 				Literal l = ASSyntax.createLiteral(OntoQueryLayerLiteral.getNameForJason(objectPropertie.substring((objectPropertie.indexOf("#")+1), objectPropertie.indexOf(">"))));
-				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">")))));
-				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
+				l.addTerm(ASSyntax.createString(domain.substring((domain.indexOf("#")+1), domain.indexOf(">"))));
+				l.addTerm(ASSyntax.createString(range.substring((range.indexOf("#")+1), range.indexOf(">"))));
 				
 				assertions.add(l);
 			} else if(hasType(axiom, "DataPropertyDomain")){
+//				//ignore
+			} else if(hasType(axiom, "DifferentIndividuals")){
+//				//ignore
+			} else if(hasType(axiom, "InverseObjectProperties")){
 //				//ignore
 			} else if(hasType(axiom, "DataPropertyAssertion")){
 
@@ -71,11 +78,11 @@ public class AxiomTranslator {
 				String range = dPAAxiomComponents.get(2).toString();
 				
 				Literal l = ASSyntax.createLiteral(propertie.substring((propertie.indexOf("#")+1), propertie.indexOf(">")));
-				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">")))));
+				l.addTerm(ASSyntax.createString(domain.substring((domain.indexOf("#")+1), domain.indexOf(">"))));
 				if (range.contains("xsd:integer")) {
-					l.addTerm(ASSyntax.createAtom(range.substring(1, (range.indexOf("^^")-1))));
+					l.addTerm(ASSyntax.createString(range.substring(1, (range.indexOf("^^")-1))));
 				} else {
-					l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
+					l.addTerm(ASSyntax.createString(range.substring((range.indexOf("#")+1), range.indexOf(">"))));
 				}
 				
 				assertions.add(l);
@@ -99,7 +106,7 @@ public class AxiomTranslator {
 				String range = cAAxiomComponents.get(0).toString();
 				String domain = cAAxiomComponents.get(1).toString();
 				Literal l = ASSyntax.createLiteral(OntoQueryLayerLiteral.getNameForJason(domain.substring((domain.indexOf("#")+1), domain.indexOf(">"))));
-				l.addTerm(ASSyntax.createAtom(OntoQueryLayerLiteral.getNameForJason(range.substring((range.indexOf("#")+1), range.indexOf(">")))));
+				l.addTerm(ASSyntax.createString(range.substring((range.indexOf("#")+1), range.indexOf(">"))));
 				
 				classInfo.add(l);
 			} else {
@@ -108,8 +115,9 @@ public class AxiomTranslator {
 			}
 		}
 		
-		
-		
+//		assertions.forEach(a->System.out.println(a));
+//		classInfo.forEach(a->System.out.println(a));
+//		rules.forEach(a->System.out.println(a));
 		Literal assertionsLiteral = ASSyntax.createLiteral("assertions", ASSyntax.createList(assertions));
 		Literal classInfoLiteral = ASSyntax.createLiteral("classInfo", ASSyntax.createList(classInfo));
 		Literal rulesLiteral = ASSyntax.createLiteral("rules", ASSyntax.createList(rules));
@@ -117,7 +125,7 @@ public class AxiomTranslator {
 		Literal explanationTerms = ASSyntax.createLiteral("explanationTerms", rulesLiteral);
 		explanationTerms.addTerm(assertionsLiteral);
 		explanationTerms.addTerm(classInfoLiteral);
-
+		
 		return explanationTerms;
 		
 	}
@@ -126,7 +134,7 @@ public class AxiomTranslator {
 		Collection<Term> terms = new LinkedList<Term>();
 		atoms.forEach(entity -> {
 			String uriPred = entity.getPredicate().toString();
-			String pred = uriPred.substring((uriPred.indexOf("#")+1), (uriPred.contains(">") ? uriPred.indexOf(">") : uriPred.length()));
+			String pred = uriPred.substring((uriPred.contains("owl:") ? uriPred.indexOf("owl:")+4 : uriPred.indexOf("#")+1), (uriPred.contains(">") ? uriPred.indexOf(">") : uriPred.length()));
 			String jPred = OntoQueryLayerLiteral.getNameForJason(pred);
 			Literal l = ASSyntax.createLiteral(jPred);
 			

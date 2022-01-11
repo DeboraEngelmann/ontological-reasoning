@@ -20,7 +20,9 @@ public class unifyRule extends DefaultInternalAction{
 	       Unifier u = new Unifier();
 
 	      for (Literal arg : rules) {
-	       
+	    	  
+	    	  System.out.println("arg.toString()");
+	    	  System.out.println(arg.toString());
 	    	  Literal argLit = Literal.parseLiteral(arg.toString());
 		      List<Term> listTerms = argLit.getTerms(); 
 		      
@@ -31,6 +33,8 @@ public class unifyRule extends DefaultInternalAction{
 		    	    	List<Term> list2 = (List<Term>) element;
 		    	    	for (Term term : list2) {
 		    	    		for (Term pred : preds) {
+		    	    			System.out.println("1-pred.toString()");
+		    	  	    	  	System.out.println(pred.toString());
 			    	    		Literal predLit = Literal.parseLiteral(pred.toString());
 			    	    		if(u.unifies(term, predLit)) {
 			    	    			System.out.print("Unifier function -> ");
@@ -40,6 +44,8 @@ public class unifyRule extends DefaultInternalAction{
 		    	    	}
 		    	    } else {
 		    	    	for (Term pred : preds) {
+	    	    			System.out.println("2-pred.toString()");
+	    	  	    	  	System.out.println(pred.toString());
 		    	    		Literal predLit = Literal.parseLiteral(pred.toString());
 			    	    	if(u.unifies(element, predLit)) {
 				    		}
@@ -57,6 +63,8 @@ public class unifyRule extends DefaultInternalAction{
 	    	List<Term> unifiedRules = new ArrayList<Term>();
 	    	
 	    	for (Term rule : rules) {
+    			System.out.println("rule.toString()");
+  	    	  	System.out.println(rule.toString());
 	    		Term ruleLit = Literal.parseLiteral(rule.toString());
 	    		unifiedRules.add(Literal.parseLiteral(ruleLit.capply(u).toString()));
 	    	}

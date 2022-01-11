@@ -15,23 +15,47 @@
 	!fillTheBeliefBase;	
 	
 //	getExplanation("Fulano", "Adult", "is-of-age-group", Axioms);
-	getExplanation("Fulano", "University", "is-in", Axioms);
-//	.print(Axioms);
-	+Axioms;
-	!addToBB(Axioms);
-	!instantiateArgumentScheme(Axioms);
+//getExplanation("Fulana", "Female", "is-of-gender", Axioms);
+//	getExplanation("Fulano", "University", "is-in", Axioms);
+//	getExplanation("Patient1", "Adult", "is-of-the-age-group", Axioms);
+//	getExplanation("101b", "Patient2", "is-unsuitable-for", Axioms);
+	!getExplanation(is_unsuitable_for("101b", "Patient2"), Axioms);
+//	getExplanation("101b", "Semi-Intensive-Care", "bed-is-care", Axioms);
+	.print(Axioms);
+//	+Axioms;
+//	!addToBB(Axioms);
+//	!instantiateArgumentScheme(Axioms);
+	.
++!getExplanation(Pred, Axioms)
+	: Pred =..[Header,Content,X] & objectProperty(OpString,Header)
+	<-
+	.print(Content);
+	.print(Header);
+	.print(X);
+	getExplanation(OpString,Pred,Axioms);
+	!instantiateArgumentScheme(Pred,Axioms);
 	.
 
-+!instantiateArgumentScheme(explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
+
++!instantiateArgumentScheme(Pred,explanationTerms("empy"))
 <-
-	!instantiateArgumentScheme(RulesList,AssertionsList).
+	.print("Empty explanation.").
++!instantiateArgumentScheme(Pred,explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
+<-
+	.concat(AssertionsList,[Pred],Assertions);
+	!instantiateArgumentScheme(RulesList,Assertions).
 	
 +!instantiateArgumentScheme(RulesList,AssertionsList)
 <-
-	jia.unifyRule(RulesList,AssertionsList,Unifier);
-	!print("Rule", Unifier);
+	.print(RulesList);
+	.print(AssertionsList);
+//	jia.unifyRule(RulesList,AssertionsList,Unifier);
+//	!print("Rule", Unifier);
 	.
 
++!addToBB(explanationTerms("empy"))
+<-
+	.print("Empty explanation.").
 +!addToBB(explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
 <-
 	!addToBB(RulesList);
