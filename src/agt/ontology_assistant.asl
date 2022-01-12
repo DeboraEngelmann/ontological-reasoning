@@ -42,15 +42,19 @@
 	.print("Empty explanation.").
 +!instantiateArgumentScheme(Pred,explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
 <-
-	.concat(AssertionsList,[Pred],Assertions);
-	!instantiateArgumentScheme(RulesList,Assertions).
+	.concat([Pred],AssertionsList,Assertions);
+	.print(Assertions);
+	!instantiateArgumentScheme(RulesList,Assertions);
+	.
 	
 +!instantiateArgumentScheme(RulesList,AssertionsList)
 <-
 	.print(RulesList);
+	.print("############################################");
 	.print(AssertionsList);
-//	jia.unifyRule(RulesList,AssertionsList,Unifier);
-//	!print("Rule", Unifier);
+	.print("############################################");
+	jia.unifyRule(RulesList,AssertionsList,Unified);
+	!print("Rule", Unified);
 	.
 
 +!addToBB(explanationTerms("empy"))
