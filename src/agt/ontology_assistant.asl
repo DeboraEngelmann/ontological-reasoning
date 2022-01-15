@@ -14,47 +14,30 @@
 	
 	!fillTheBeliefBase;	
 	
-//	getExplanation("Fulano", "Adult", "is-of-age-group", Axioms);
-//getExplanation("Fulana", "Female", "is-of-gender", Axioms);
-//	getExplanation("Fulano", "University", "is-in", Axioms);
-//	getExplanation("Patient1", "Adult", "is-of-the-age-group", Axioms);
-//	getExplanation("101b", "Patient2", "is-unsuitable-for", Axioms);
-	!getExplanation(is_unsuitable_for("101b", "Patient2"), Axioms);
-//	getExplanation("101b", "Semi-Intensive-Care", "bed-is-care", Axioms);
-	.print(Axioms);
-//	+Axioms;
-//	!addToBB(Axioms);
-//	!instantiateArgumentScheme(Axioms);
-	.
-+!getExplanation(Pred, Axioms)
-	: Pred =..[Header,Content,X] & objectProperty(OpString,Header)
-	<-
-	.print(Content);
-	.print(Header);
-	.print(X);
-	getExplanation(OpString,Pred,Axioms);
-	!instantiateArgumentScheme(Pred,Axioms);
-	.
-
-
-+!instantiateArgumentScheme(Pred,explanationTerms("empy"))
-<-
-	.print("Empty explanation.").
-+!instantiateArgumentScheme(Pred,explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)))
-<-
-	.concat([Pred],AssertionsList,Assertions);
-	.print(Assertions);
-	!instantiateArgumentScheme(RulesList,Assertions);
+	!getExplanation(is_unsuitable_for("101b", "Patient2"), Explanation);
+	!print("Explanation", Explanation);
 	.
 	
-+!instantiateArgumentScheme(RulesList,AssertionsList)
++!getExplanation(Pred, Explanation)
+	: Pred =..[Header,Content,X] & objectProperty(OpString,Header)
 <-
-	.print(RulesList);
-	.print("############################################");
-	.print(AssertionsList);
-	.print("############################################");
-	jia.unifyRule(RulesList,AssertionsList,Unified);
-	!print("Rule", Unified);
+	.print("Get the reasoner's explanation");
+	getExplanation(OpString,Pred,Axioms);
+	!instantiateArgumentScheme(Pred,Axioms,Explanation);
+	.
+
++!instantiateArgumentScheme(Pred,explanationTerms("empy"),Explanation)
+<-
+	Explanation = "Empty explanation.".
++!instantiateArgumentScheme(Pred,explanationTerms(rules(RulesList),assertions(AssertionsList),classInfo(ClassInfoList)),Explanation)
+<-
+	.concat([Pred],AssertionsList,Assertions);
+	.print("Instantiate argument schemes");
+	!instantiateArgumentScheme(RulesList,Assertions,Explanation);
+	.
++!instantiateArgumentScheme(RulesList,AssertionsList,Explanation)
+<-
+	jia.unifyRule(RulesList,AssertionsList,Explanation);
 	.
 
 +!addToBB(explanationTerms("empy"))
@@ -64,7 +47,7 @@
 <-
 	!addToBB(RulesList);
 	!addToBB(AssertionsList);
-	!addToBB(ClassInfoList);	
+	!addToBB(ClassInfoList);
 	.
 +!addToBB([])
 <-

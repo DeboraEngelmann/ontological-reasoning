@@ -89,14 +89,11 @@ public class OntologyArtifact extends Artifact {
 	        
 	        OWLObjectPropertyAssertionAxiom propertyAssertion = dataFactory.getOWLObjectPropertyAssertionAxiom((OWLObjectPropertyExpression)objectProperty, (OWLIndividual)domain, (OWLIndividual)range);
 
-			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion, 20);
-//	        Set<OWLAxiom> explanation = this.expGen.getEntailmentExplanation((OWLAxiom)propertyAssertion);
+			Set<Set<OWLAxiom>> axiomSets = this.expGen.getEntailmentExplanations((OWLAxiom)propertyAssertion, 10);
 			if (axiomSets.isEmpty()) {
-//			if (explanation.isEmpty()) {
 				axioms.set(ASSyntax.createLiteral("explanationTerms", ASSyntax.createString("empty")));
 			} else {
 				Set<OWLAxiom> explanation = chooseExplanation(axiomSets);
-				System.out.println("translate");
 				axioms.set(AxiomTranslator.translateAxioms(explanation));
 			}	
 	}

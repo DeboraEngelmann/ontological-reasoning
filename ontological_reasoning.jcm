@@ -11,9 +11,7 @@ mas ontological_reasoning {
     }
     
 	workspace wp{
-//		artifact onto:br.pucrs.smart.ontology.mas.OntologyArtifact("src/resources/Tasks.owl")
 		artifact onto:br.pucrs.smart.ontology.mas.OntologyArtifact("src/resources/HospitalBedAllocation-en3.owl")
-//		artifact onto:br.pucrs.smart.ontology.mas.OntologyArtifact("src/resources/New-Bed-allocation2.owl")
 	}
 
 }

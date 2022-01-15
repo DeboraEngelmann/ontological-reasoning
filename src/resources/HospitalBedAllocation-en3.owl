@@ -2406,28 +2406,28 @@
         <Body>
             <ClassAtom>
                 <Class IRI="#Hospital_Bed"/>
-                <Variable IRI="urn:swrl:var#B2r"/>
+                <Variable IRI="urn:swrl:var#B1r"/>
             </ClassAtom>
             <ClassAtom>
                 <Class IRI="#Bedroom"/>
-                <Variable IRI="urn:swrl:var#Br4r"/>
+                <Variable IRI="urn:swrl:var#Br"/>
             </ClassAtom>
             <ObjectPropertyAtom>
                 <ObjectProperty IRI="#is-in"/>
-                <Variable IRI="urn:swrl:var#B2r"/>
-                <Variable IRI="urn:swrl:var#Br4r"/>
+                <Variable IRI="urn:swrl:var#B1r"/>
+                <Variable IRI="urn:swrl:var#Br"/>
             </ObjectPropertyAtom>
             <ObjectPropertyAtom>
-                <ObjectProperty IRI="#bedroom-is-care"/>
-                <Variable IRI="urn:swrl:var#Br4r"/>
-                <Variable IRI="urn:swrl:var#C3r"/>
+                <ObjectProperty IRI="#bed-is-care"/>
+                <Variable IRI="urn:swrl:var#B1r"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
             </ObjectPropertyAtom>
         </Body>
         <Head>
             <ObjectPropertyAtom>
-                <ObjectProperty IRI="#bed-is-care"/>
-                <Variable IRI="urn:swrl:var#B2r"/>
-                <Variable IRI="urn:swrl:var#C3r"/>
+                <ObjectProperty IRI="#bedroom-is-care"/>
+                <Variable IRI="urn:swrl:var#Br"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
             </ObjectPropertyAtom>
         </Head>
     </DLSafeRule>
@@ -2435,28 +2435,28 @@
         <Body>
             <ClassAtom>
                 <Class IRI="#Hospital_Bed"/>
-                <Variable IRI="urn:swrl:var#B3r"/>
+                <Variable IRI="urn:swrl:var#B2r"/>
             </ClassAtom>
             <ClassAtom>
                 <Class IRI="#Bedroom"/>
-                <Variable IRI="urn:swrl:var#Br4r"/>
+                <Variable IRI="urn:swrl:var#Br"/>
             </ClassAtom>
             <ObjectPropertyAtom>
                 <ObjectProperty IRI="#is-in"/>
-                <Variable IRI="urn:swrl:var#B3r"/>
-                <Variable IRI="urn:swrl:var#Br4r"/>
+                <Variable IRI="urn:swrl:var#B2r"/>
+                <Variable IRI="urn:swrl:var#Br"/>
             </ObjectPropertyAtom>
             <ObjectPropertyAtom>
-                <ObjectProperty IRI="#bed-is-care"/>
-                <Variable IRI="urn:swrl:var#B3r"/>
-                <Variable IRI="urn:swrl:var#C3r"/>
+                <ObjectProperty IRI="#bedroom-is-care"/>
+                <Variable IRI="urn:swrl:var#Br"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
             </ObjectPropertyAtom>
         </Body>
         <Head>
             <ObjectPropertyAtom>
-                <ObjectProperty IRI="#bedroom-is-care"/>
-                <Variable IRI="urn:swrl:var#Br4r"/>
-                <Variable IRI="urn:swrl:var#C3r"/>
+                <ObjectProperty IRI="#bed-is-care"/>
+                <Variable IRI="urn:swrl:var#B2r"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
             </ObjectPropertyAtom>
         </Head>
     </DLSafeRule>
@@ -2466,59 +2466,59 @@
                 <Class IRI="#Patient"/>
                 <Variable IRI="urn:swrl:var#P1r"/>
             </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#is-care"/>
+                <Variable IRI="urn:swrl:var#P1r"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
+            </ObjectPropertyAtom>
+            <ClassAtom>
+                <Class IRI="#Hospital_Bed"/>
+                <Variable IRI="urn:swrl:var#B1r"/>
+            </ClassAtom>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#occupy-one"/>
+                <Variable IRI="urn:swrl:var#P1r"/>
+                <Variable IRI="urn:swrl:var#B1r"/>
+            </ObjectPropertyAtom>
+        </Body>
+        <Head>
+            <ObjectPropertyAtom>
+                <ObjectProperty IRI="#bed-is-care"/>
+                <Variable IRI="urn:swrl:var#B1r"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
+            </ObjectPropertyAtom>
+        </Head>
+    </DLSafeRule>
+    <DLSafeRule>
+        <Body>
+            <ClassAtom>
+                <Class IRI="#Patient"/>
+                <Variable IRI="urn:swrl:var#P2r"/>
+            </ClassAtom>
             <ClassAtom>
                 <Class IRI="#Hospital_Bed"/>
                 <Variable IRI="urn:swrl:var#B2r"/>
             </ClassAtom>
             <ObjectPropertyAtom>
                 <ObjectProperty IRI="#is-care"/>
-                <Variable IRI="urn:swrl:var#P1r"/>
-                <Variable IRI="urn:swrl:var#Cp1r"/>
+                <Variable IRI="urn:swrl:var#P2r"/>
+                <Variable IRI="urn:swrl:var#C2r"/>
             </ObjectPropertyAtom>
             <ObjectPropertyAtom>
                 <ObjectProperty IRI="#bed-is-care"/>
                 <Variable IRI="urn:swrl:var#B2r"/>
-                <Variable IRI="urn:swrl:var#Cb1r"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
             </ObjectPropertyAtom>
             <DifferentIndividualsAtom>
-                <Variable IRI="urn:swrl:var#Cp1r"/>
-                <Variable IRI="urn:swrl:var#Cb1r"/>
+                <Variable IRI="urn:swrl:var#C1r"/>
+                <Variable IRI="urn:swrl:var#C2r"/>
             </DifferentIndividualsAtom>
         </Body>
         <Head>
             <ObjectPropertyAtom>
                 <ObjectProperty IRI="#is-unsuitable-for"/>
                 <Variable IRI="urn:swrl:var#B2r"/>
-                <Variable IRI="urn:swrl:var#P1r"/>
-            </ObjectPropertyAtom>
-        </Head>
-    </DLSafeRule>
-    <DLSafeRule>
-        <Body>
-            <ClassAtom>
-                <Class IRI="#Patient"/>
-                <Variable IRI="urn:swrl:var#P3r"/>
-            </ClassAtom>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="#is-care"/>
-                <Variable IRI="urn:swrl:var#P3r"/>
-                <Variable IRI="urn:swrl:var#C3r"/>
-            </ObjectPropertyAtom>
-            <ClassAtom>
-                <Class IRI="#Hospital_Bed"/>
-                <Variable IRI="urn:swrl:var#B3r"/>
-            </ClassAtom>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="#occupy-one"/>
-                <Variable IRI="urn:swrl:var#P3r"/>
-                <Variable IRI="urn:swrl:var#B3r"/>
-            </ObjectPropertyAtom>
-        </Body>
-        <Head>
-            <ObjectPropertyAtom>
-                <ObjectProperty IRI="#bed-is-care"/>
-                <Variable IRI="urn:swrl:var#B3r"/>
-                <Variable IRI="urn:swrl:var#C3r"/>
+                <Variable IRI="urn:swrl:var#P2r"/>
             </ObjectPropertyAtom>
         </Head>
     </DLSafeRule>
