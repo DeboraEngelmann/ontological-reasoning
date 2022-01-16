@@ -184,6 +184,12 @@ public class OntologyArtifact extends Artifact {
 		isRelated.set(queryEngine.getQuery().isRelated(domainName, propertyName, rangeName));
 	}
 	
+	@OPERATION
+	void getObjectPropertyAssertions(OpFeedbackParam<Literal[]> opAssertions) {
+		List<Object> assertions = queryEngine.getObjectPropertyAssertionAxioms();
+		opAssertions.set(assertions.toArray(new Literal[assertions.size()]));
+	}
+	
 	/**
 	 * @param domain The name of the instance which corresponds to the domain of the property.
 	 * @param propertyName Name of the property

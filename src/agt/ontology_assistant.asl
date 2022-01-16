@@ -81,6 +81,9 @@
 	getObjectPropertyNames(ObjectPropertyNames);
 	.print("Adding ObjectProperties to the belief base");
 	!addToTheBeliefBase(ObjectPropertyNames);
+	getObjectPropertyAssertions(Assertions);
+	.print("Adding Assertions to the belief base");
+	!addToTheBeliefBase(Assertions);
 	.
 
 +!addToTheBeliefBase([]).	

@@ -124,6 +124,15 @@ public class OwlOntoLayer {
     public Set<OWLNamedIndividual> getInstances(OWLClass concept, boolean direct) {
         return this.reasoner.getInstances((OWLClassExpression)concept, direct).getFlattened();
     }
+    
+    public List<OWLObjectPropertyAssertionAxiom> getObjectPropertyAssertionAxioms() {
+    	List<OWLIndividual> individuals = getIndividuals();
+    	List<OWLObjectPropertyAssertionAxiom> axioms = new ArrayList<OWLObjectPropertyAssertionAxiom>();
+    	individuals.forEach(i -> {
+    		axioms.addAll(this.ontology.objectPropertyAssertionAxioms(i).collect(Collectors.toList()));
+    	});
+    	return axioms;
+    }
 
     public boolean isInstanceOf(OWLNamedIndividual instance, OWLClass concept) {
         for (OWLClass clas : this.getInstanceTypes(instance, false)) {
